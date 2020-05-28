@@ -38,7 +38,6 @@ public class MainActivity extends AppCompatActivity {
         initListner();
     }
 
-
     private void findViews() {
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
@@ -91,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
     private void CallUpdateAndDeleteDialog(final String userid, String username, final String email, String monumber) {
 
         AlertDialog.Builder dialogBuilder = new AlertDialog.Builder(this);
@@ -110,7 +110,6 @@ public class MainActivity extends AppCompatActivity {
         dialogBuilder.setTitle(username);
         final AlertDialog b = dialogBuilder.create();
         b.show();
-
 
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -155,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(getApplicationContext(), "User Deleted", Toast.LENGTH_LONG).show();
         return true;
     }
-
 
     private void addUser() {
         String name = editTextName.getText().toString().trim();
