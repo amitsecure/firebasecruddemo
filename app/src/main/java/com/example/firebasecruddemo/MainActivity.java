@@ -23,27 +23,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-    //initialize
+
     EditText editTextName, editTextEmail, editTextNumber;
     Button buttonAddUser;
     ListView listViewUsers;
-    //a list to store all the User from firebase database
     List<User> Users;
     DatabaseReference databaseReference;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-// method for find ids of views
-        findViews();
 
-// to maintian click listner of views
+        findViews();
         initListner();
     }
 
 
     private void findViews() {
-//getRefrance for user table
         FirebaseDatabase.getInstance().setPersistenceEnabled(true);
         databaseReference = FirebaseDatabase.getInstance().getReference("Users");
 
@@ -52,24 +48,18 @@ public class MainActivity extends AppCompatActivity {
         editTextNumber = (EditText) findViewById(R.id.editTextNumber);
         listViewUsers = (ListView) findViewById(R.id.listViewUsers);
         buttonAddUser = (Button) findViewById(R.id.buttonAddUser);
-//list for store objects of user
+
         Users = new ArrayList<>();
     }
 
     private void initListner() {
-//adding an onclicklistener to button
         buttonAddUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//calling the method addUser()
-//the method is defined below
-//this method is actually performing the write operation
                 addUser();
             }
         });
 
-
-// list item click listener
         listViewUsers.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -86,18 +76,13 @@ public class MainActivity extends AppCompatActivity {
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-//clearing the previous User list
+
                 Users.clear();
-//getting all nodes
                 for (DataSnapshot postSnapshot : dataSnapshot.getChildren()) {
-//getting User from firebase console
                     User User = postSnapshot.getValue(User.class);
-//adding User to the list
                     Users.add(User);
                 }
-//creating Userlist adapter
                 UserList UserAdapter = new UserList(MainActivity.this, Users);
-//attaching adapter to the listview
                 listViewUsers.setAdapter(UserAdapter);
             }
             @Override
@@ -112,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         LayoutInflater inflater = getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.update_dialog, null);
         dialogBuilder.setView(dialogView);
-//Access Dialog views
+
         final EditText updateTextname = (EditText) dialogView.findViewById(R.id.updateTextname);
         final EditText updateTextemail = (EditText) dialogView.findViewById(R.id.updateTextemail);
         final EditText updateTextmobileno = (EditText) dialogView.findViewById(R.id.updateTextmobileno);
@@ -121,24 +106,22 @@ public class MainActivity extends AppCompatActivity {
         updateTextmobileno.setText(monumber);
         final Button buttonUpdate = (Button) dialogView.findViewById(R.id.buttonUpdateUser);
         final Button buttonDelete = (Button) dialogView.findViewById(R.id.buttonDeleteUser);
-//username for set dialog title
+
         dialogBuilder.setTitle(username);
         final AlertDialog b = dialogBuilder.create();
         b.show();
 
-// Click listener for Update data
+
         buttonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String name = updateTextname.getText().toString().trim();
                 String email = updateTextemail.getText().toString().trim();
                 String mobilenumber = updateTextmobileno.getText().toString().trim();
-//checking if the value is provided or not Here, you can Add More Validation as you required
 
                 if (!TextUtils.isEmpty(name)) {
                     if (!TextUtils.isEmpty(email)) {
                         if (!TextUtils.isEmpty(mobilenumber)) {
-//Method for update data
                             updateUser(userid, name, email, mobilenumber);
                             b.dismiss();
                         }
@@ -148,11 +131,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-// Click listener for Delete data
+
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//Method for delete data
                 deleteUser(userid);
                 b.dismiss();
             }
@@ -160,19 +142,15 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private boolean updateUser(String id, String name, String email, String mobilenumber) {
-//getting the specified User reference
         DatabaseReference UpdateReference = FirebaseDatabase.getInstance().getReference("Users").child(id);
         User User = new User(id, name, email, mobilenumber);
-//update User to firebase
         UpdateReference.setValue(User);
         Toast.makeText(getApplicationContext(), "User Updated", Toast.LENGTH_LONG).show();
         return true;
     }
 
     private boolean deleteUser(String id) {
-//getting the specified User reference
         DatabaseReference DeleteReference = FirebaseDatabase.getInstance().getReference("Users").child(id);
-//removing User
         DeleteReference.removeValue();
         Toast.makeText(getApplicationContext(), "User Deleted", Toast.LENGTH_LONG).show();
         return true;
@@ -180,24 +158,15 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void addUser() {
-
-//getting the values to save
         String name = editTextName.getText().toString().trim();
         String email = editTextEmail.getText().toString().trim();
         String mobilenumber = editTextNumber.getText().toString().trim();
 
-
-//checking if the value is provided or not Here, you can Add More Validation as you required
-
         if (!TextUtils.isEmpty(name)) {
             if (!TextUtils.isEmpty(email)) {
                 if (!TextUtils.isEmpty(mobilenumber)) {
-
-//it will create a unique id and we will use it as the Primary Key for our User
                     String id = databaseReference.push().getKey();
-//creating an User Object
                     User User = new User(id, name, email, mobilenumber);
-//Saving the User
                     databaseReference.child(id).setValue(User);
 
                     editTextName.setText("");
