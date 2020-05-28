@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1046754379621",
+    "firebase_url": "https://clickcounter-c83bf.firebaseio.com",
+    "project_id": "clickcounter-c83bf",
+    "storage_bucket": "clickcounter-c83bf.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1046754379621:android:d8b3f00b7cdb1f28edc38c",
+        "android_client_info": {
+          "package_name": "com.example.firebasecruddemo"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1046754379621-c75fo7jpctl01gpr4dfgkfl4mmtcd3se.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAi63PMk-Fl64RuVOVLJ8Zc9Q0ACP7Ldw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1046754379621-c75fo7jpctl01gpr4dfgkfl4mmtcd3se.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

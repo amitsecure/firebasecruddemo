@@ -1,0 +1,2 @@
+rootProject.name='firebasecruddemo'
+include ':app'
