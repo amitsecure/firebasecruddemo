@@ -65,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
                 User User = Users.get(i);
                 CallUpdateAndDeleteDialog(User.getUserid(), User.getUsername(), User.getUseremail(), User.getUsermobileno());
 
-
             }
         });
     }
@@ -126,10 +125,8 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 }
-
             }
         });
-
 
         buttonDelete.setOnClickListener(new View.OnClickListener() {
             @Override
